@@ -6,7 +6,7 @@ WORKDIR /app
 
 
 # dependencies for psycopg2
-RUN apt-get update && apt-get install --no-install-recommends -y dnsutils=1:9.11.5.P4+dfsg-5.1+deb10u11 libpq-dev=11.16-0+deb10u1 python3-dev=3.7.3-1 && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN printf 'deb http://archive.debian.org/debian buster main\ndeb http://archive.debian.org/debian-security buster/updates main\n' > /etc/apt/sources.list && printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99no-check && apt-get update && apt-get install --no-install-recommends -y dnsutils libpq-dev python3-dev && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
 # Set environment variables
