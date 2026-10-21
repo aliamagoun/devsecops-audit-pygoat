@@ -1,0 +1,22 @@
+name: CI (avant)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Construire l'image Docker
+        run: docker build -t pygoat:${{ github.sha }} .
+
+      - name: Verifier que l'application demarre
+        run: |
+          docker run -d -p 8000:8000 pygoat:${{ github.sha }}
+          sleep 20
+          curl -f http://localhost:8000/
